@@ -1,0 +1,102 @@
+CREATE TABLE joueurs (
+    joueur_id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    points_de_vie INT NOT NULL,
+    points_experience INT DEFAULT 0,
+    position_x INT NOT NULL,
+    position_y INT NOT NULL
+);
+
+CREATE TABLE carte (
+    cellule_id INT AUTO_INCREMENT PRIMARY KEY,
+    type ENUM('vide', 'créature', 'trésor', 'joueur') NOT NULL,
+    position_x INT NOT NULL,
+    position_y INT NOT NULL,
+    force_creatures INT DEFAULT NULL
+);
+
+CREATE TABLE historique_actions (
+    action_id INT AUTO_INCREMENT PRIMARY KEY,
+    joueur_id INT NOT NULL,
+    description TEXT NOT NULL,
+    date_action TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (joueur_id) REFERENCES joueurs(joueur_id)
+);
+
+DELIMITER //
+
+CREATE PROCEDURE FillJoueurs(IN numRecords INT)
+BEGIN
+  DECLARE i INT DEFAULT 0;
+  
+  WHILE i < numRecords DO
+    INSERT INTO joueurs (nom, points_de_vie, points_experience, position_x, position_y)
+    VALUES (CONCAT('Joueur_', i + 1), ROUND(RAND() * 100), ROUND(RAND() * 50), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10));
+    SET i = i + 1;
+  END WHILE;
+  
+END //
+
+DELIMITER ;
+
+-- Appeler la procédure pour créer 10 joueurs
+CALL FillJoueurs(10);
+
+DELIMITER //
+
+CREATE PROCEDURE FillCarte()
+BEGIN
+  DECLARE x INT DEFAULT 1;
+  DECLARE y INT DEFAULT 1;
+  DECLARE creatureChance DOUBLE;
+  
+  WHILE x <= 10 DO
+    WHILE y <= 10 DO
+      SET creatureChance = RAND();
+      
+      -- Insertion d'une créature avec une probabilité de 30% (modifiable)
+      IF creatureChance <= 0.3 THEN
+        INSERT INTO carte (type, position_x, position_y, force_creatures)
+        VALUES ('créature', x, y, ROUND(RAND() * 100));
+      ELSE
+        INSERT INTO carte (type, position_x, position_y)
+        VALUES ('vide', x, y);
+      END IF;
+      
+      SET y = y + 1;
+    END WHILE;
+    
+    SET y = 1;
+    SET x = x + 1;
+  END WHILE;
+  
+END //
+
+DELIMITER ;
+
+-- Appeler la procédure pour remplir la carte
+CALL FillCarte();
+
+DELIMITER //
+
+CREATE PROCEDURE FillHistoriqueActions(IN numRecords INT)
+BEGIN
+  DECLARE i INT DEFAULT 0;
+  DECLARE randomPlayerId INT;
+  
+  WHILE i < numRecords DO
+    -- Sélectionner un ID de joueur aléatoire
+    SET randomPlayerId = FLOOR(1 + RAND() * 10); -- Supposant qu'il y a 10 joueurs
+    
+    INSERT INTO historique_actions (joueur_id, description)
+    VALUES (randomPlayerId, CONCAT('Action_', i + 1, ' pour Joueur ', randomPlayerId));
+    
+    SET i = i + 1;
+  END WHILE;
+  
+END //
+
+DELIMITER ;
+
+-- Appeler la procédure pour créer 50 actions
+CALL FillHistoriqueActions(50);

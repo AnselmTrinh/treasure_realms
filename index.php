@@ -1,28 +1,42 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
-    $action = $_POST['action'];
+// index.php
 
+require 'config.php'; // Connexion à la bdd 
 
-    if ($action === 'jouer') {
-        // Redirection vers la page de jeu (ou traitement de la logique du jeu)
-        header("Location: game.php");
-        exit();
-    } elseif ($action === 'quitter') {
-        // Action de quitter (peut nécessiter un traitement spécifique)
-        exit('Application quittée.');
-    }
+// Affiliation et affichage des données de la table 'carte'
+$query = $pdo->query("SELECT * FROM carte ORDER BY position_x, position_y");
+$cells = $query->fetchAll();
+
+$map = [];
+foreach ($cells as $cell) {
+    $map[$cell['position_x']][$cell['position_y']] = $cell;
 }
+
+echo "<table border='1'>";
+for ($x = 1; $x <= 10; $x++) {
+    echo "<tr>";
+    for ($y = 1; $y <= 10; $y++) {
+        echo "<td>";
+        
+        $cell = $map[$x][$y];
+        switch ($cell['type']) {
+            case 'vide':
+                echo "🟦"; // CASES VIDES
+                break;
+            case 'créature':
+                echo "👹"; // CREATURES
+                break;
+            case 'trésor':
+                echo "💰";
+                break;
+            case 'joueur':
+                echo "🚶"; // JOUEUR
+                break;
+        }
+
+        echo "</td>";
+    }
+    echo "</tr>";
+}
+echo "</table>";
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Menu d'Accueil</title>
-</head>
-<body>
-    <h1>Menu d'Accueil</h1>
-    <form method="post" action="/Game/game.php">
-        <button type="submit" name="action" value="jouer">Jouer</button>
-        <button type="submit" name="action" value="quitter">Quitter</button>
-    </form>
-</body>
-</html>
