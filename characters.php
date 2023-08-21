@@ -4,6 +4,7 @@ class Characters
   public $positionX;
   public $positionY;
   public $health;
+  public float $experience;
   public int $result;
   public $force;
   public function __construct($health, $force, $posX, $posY)
