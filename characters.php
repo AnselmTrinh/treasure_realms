@@ -17,6 +17,7 @@ class Characters {
       $result  =($this->health-$healthEnnemy);
       return true;
     }else{
+      echo "Aucune cible selectionnée !";
       return false;
     }
   }
