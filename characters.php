@@ -7,7 +7,6 @@ class Characters {
     $this->health = $health;
     $this->force = $force;
   }
-
   /*
   *@desc: Combat l'ennemy 
   *@param : healthEnemy : int
@@ -22,4 +21,3 @@ class Characters {
     }
   }
 }
-?>
