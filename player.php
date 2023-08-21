@@ -1,8 +1,8 @@
 <?php
-// mobs is inherited from 
+// player is inherited from 
 class Player extends Characters {
   public function message() {
-    echo "Prépare toi à souffrir !";
+    echo "Je ne faiblirai pas devant toi !";
   }
 }
 ?>
