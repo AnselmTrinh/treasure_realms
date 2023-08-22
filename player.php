@@ -20,15 +20,15 @@ class Player extends Characters {
 
   public function move($keyPress) {
 switch ($keyPress) {
-    case 'UP':
+    case 'up':
         echo "le joueur se dirige en haut";
         break;
-    case 'DOWN':
+    case 'down':
         echo "le joueur se dirige en bas";
         break;
-    case 'LEFT':
+    case 'left':
         echo "le joueur se dirige à gauche";
-    case 'RIGHT':
+    case 'right':
         echo "le joueur se dirige à droite";
     break;
     default:

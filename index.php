@@ -9,10 +9,7 @@
 </head>
 
 <body>
-
     <?php
-    // index.php
-    
     require 'config.php'; // Connexion à la bdd 
     
     try {
@@ -76,7 +73,7 @@
         <button type="button" name="direction" value="reset">Reset Game</button>
     </div>
     <div class="action-log">
-            <!-- Display user actions and their consequences -->
+        <!-- Display user actions and their consequences -->
     </div>
 
 
@@ -127,15 +124,22 @@
 
             function sendAction(action, direction) {
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'game.php', true);
+                xhr.open('POST', 'game.php', false);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        if (response.status === 'success') {
-                            // Update the action log or other parts of the UI if needed
-                            actionLog.innerHTML = response.message;
+                        try {
+                            data= xhr.responseText.toString();
+                            console.log("data",data)
+                            const response = JSON.parse(data);
+                            if (response.status === 'success') {
+                                actionLog.innerHTML = response.message;
+                            }
+                        } catch (e) {
+                            console.error('Failed to parse JSON:', e);
+                            console.log('Server response:', xhr.responseText);
                         }
+
                     }
                 };
                 xhr.send(`action=${action}&direction=${direction}`);
