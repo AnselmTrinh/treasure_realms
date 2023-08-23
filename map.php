@@ -3,7 +3,14 @@
 
 require 'config.php'; // Connexion à la bdd
 
-$query = $pdo->query("SELECT * FROM carte ORDER BY position_x, position_y");
+
+
+
+
+$strRequete='UPDATE carte SET position_x = FLOOR(RAND() * 9) + 2, position_y = FLOOR(RAND() * 9) + 2 WHERE carte.type <> "joueur";';
+
+
+$query = $pdo->query("strRequete . SELECT * FROM carte ORDER BY position_x, position_y");
 $cells = $query->fetchAll();
 
 $map = [];

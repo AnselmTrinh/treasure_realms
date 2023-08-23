@@ -25,15 +25,67 @@
 
         $pdo = new PDO($dsn, $user, $password, $options);
 
-        echo 'Connexion réussie';
+        echo 'Statut : Online';
     } catch (PDOException $e) {
         die("Connection failed: " . $e->getMessage());
     }
 
-    // Affiliation et affichage des données de la table 'carte'
-    $query = $pdo->query("SELECT * FROM carte ORDER BY position_x, position_y");
-    $cells = $query->fetchAll();
 
+
+// Définir le nombre maximal de cellules "trésor" à mettre à jour
+
+$pdo->exec("UPDATE carte SET type = 'joueur' WHERE cellule_id = 1" );
+
+
+// Compter le nombre de cellules avec le type "trésor"
+$query = $pdo->query("SELECT COUNT(*) FROM carte WHERE type = 'trésor'");
+$count = $query->fetchColumn();
+
+// Mettre à jour les cellules "trésor" uniquement si le nombre actuel est inférieur au maximum
+//if ($count==1) {
+  //  $pdo->exec("UPDATE carte SET type = 'trésor' WHERE position_y = FLOOR(RAND() * (10 - 2 + 1)) + 2 AND position_x = FLOOR(RAND() * (10 - 2 + 1)) + 2 and cellule_id=2");
+//}
+
+
+
+    // Affiliation et affichage des données de la table 'carte'
+// Convertir une cellule "créature" en "vide" de manière aléatoire
+
+
+
+// Convertir une cellule "créature" en "vide" de manière aléatoire
+$pdo->exec("UPDATE carte SET type = 'vide' WHERE type = 'créature' AND RAND() < 0.3");
+
+
+// Convertir une cellule "vide" en "créature" de manière aléatoire
+$pdo->exec("UPDATE carte SET type = 'créature' WHERE type = 'vide' AND RAND() < 0.2");
+
+// Compter le nombre de cellules vides
+$countQuery = $pdo->query("SELECT COUNT(*) FROM carte WHERE type = 'vide'");
+$totalEmptyCells = $countQuery->fetchColumn();
+
+if ($countQuery ==1){
+// Générer un nombre aléatoire entre 1 et le nombre total de cellules vides
+$randomCellCount = rand(2, 10);
+
+// Sélectionner l'ID de la cellule vide correspondant au nombre aléatoire
+$randomEmptyCellQuery = $pdo->prepare("SELECT cellule_id FROM carte WHERE type = 'vide' LIMIT $randomCellCount, 1");
+$randomEmptyCellQuery->execute();
+$randomEmptyCell = $randomEmptyCellQuery->fetchColumn();
+
+// Mettre à jour la cellule sélectionnée en tant que trésor
+$pdo->exec("UPDATE carte SET type = 'trésor' WHERE cellule_id = $randomEmptyCell AND cellule_id<>1");
+}
+
+
+
+//$pdo->exec("UPDATE carte SET type = 'vide' WHERE type = 'trésor' AND RAND() < 0.3");
+
+
+// Sélectionner toutes les cellules de la table "carte" après les mises à jour
+$query = $pdo->query("SELECT * FROM carte ORDER BY position_x, position_y");
+$cells = $query->fetchAll(PDO::FETCH_ASSOC);
+    
     $map = [];
     foreach ($cells as $cell) {
         $map[$cell['position_x']][$cell['position_y']] = $cell;
