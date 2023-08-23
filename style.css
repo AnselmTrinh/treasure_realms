@@ -1,0 +1,28 @@
+.game-map {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+  gap: 2px;
+  border: 2px solid black;
+  width: 520px;
+  height: 520px;
+  margin: 20px auto;
+}
+
+.map-cell {
+  width: 50px;
+  height: 50px;
+  border: 1px solid lightgray;
+}
+
+.player {
+  background-color: blue;
+}
+
+.treasure {
+  background-color: gold;
+}
+
+.monster {
+  background-color: red;
+}
