@@ -10,12 +10,12 @@ class Treasure
         $this->y = rand(0, $maxY - 1);
     }
 
-    public function getX()
+    public function gettreasureX()
     {
         return $this->x;
     }
 
-    public function getY()
+    public function gettreasureY()
     {
         return $this->y;
     }

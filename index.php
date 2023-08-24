@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Game Map</title>
+    <title>Treasure Realms</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
@@ -15,62 +15,71 @@
         include '../poo_treasure/map.php';
 
         $gameMap = new GameMap(10, 10);
-
         $player = $gameMap->getPlayer();
+        $playerX = $player->getX();
+        $playerY = $player->getY();
         $treasure = $gameMap->getTreasure();
         $monsters = $gameMap->getMonsters();
 
-        for ($y = 0; $y < 10; $y++) {
-            for ($x = 0; $x < 10; $x++) {
-                $isPlayer = ($x == $player->getX() && $y == $player->getY());
-                $isTreasure = ($x == $treasure->getX() && $y == $treasure->getY());
+        for ($y = 1; $y <= 10; $y++) {
+            for ($x = 1; $x <= 10; $x++) {
+                $isPlayer = ($x == $playerX && $y == $playerY);
+                $isTreasure = ($x == $treasure->gettreasureX() && $y == $treasure->gettreasureY());
                 $isMonster = false;
+
                 foreach ($monsters as $monster) {
-                    if ($x == $monster->getX() && $y == $monster->getY()) {
+                    if ($x == $monster->getmonsterX() && $y == $monster->getmonsterY()) {
                         $isMonster = true;
                         break;
                     }
                 }
 
                 echo '<div class="map-cell';
-                if ($isPlayer) echo ' player';
-                if ($isTreasure) echo ' treasure';
-                if ($isMonster) echo ' monster';
+
+                if ($isPlayer) {
+                    echo ' player';
+                } else {
+                    if ($isTreasure) {
+                        echo ' treasure';
+                    }
+                    if ($isMonster) {
+                        echo ' monster';
+                    }
+                }
+
                 echo '"></div>';
             }
         }
         ?>
         <script>
-            let PlayerX = <?php echo $playerX; ?>;
-            let PlayerY = <?php echo $playerY; ?>;
+            let playerX = <?php echo $playerX; ?>;
+            let playerY = <?php echo $playerY; ?>;
             const step = 1;
 
-            // function updatePlayerPosition() {
-            //     const playerCell = document.querySelector(`.grid-cell[data-x='${playerX}'][data-y='${playerY}']`);
-            //     playerCell.textContent = "🚶";
-            // }
-
             document.addEventListener('keydown', (event) => {
-                let newPlayerX = playerX;
-                let newPlayerY = playerY;
-
                 switch (event.key) {
                     case 'ArrowUp':
-                        newPlayerX = Math.max(1, playerX - step);
+                        if (playerY > 1) playerY -= step;
                         break;
                     case 'ArrowDown':
-                        newPlayerX = Math.min(10, playerX + step);
+                        if (playerY < 10) playerY += step;
                         break;
                     case 'ArrowLeft':
-                        newPlayerY = Math.max(1, playerY - step);
+                        if (playerX > 1) playerX -= step;
                         break;
                     case 'ArrowRight':
-                        newPlayerY = Math.min(10, playerY + step);
+                        if (playerX < 10) playerX += step;
                         break;
                 }
+
+                updatePlayerPosition();
             });
 
-            updatePlayerPosition();
+            function updatePlayerPosition() {
+                const playerCell = document.querySelector('.player');
+                playerCell.style.gridRow = playerY;
+                playerCell.style.gridColumn = playerX;
+            }
         </script>
     </div>
 </body>

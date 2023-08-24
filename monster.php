@@ -10,12 +10,12 @@ class Monster
         $this->y = rand(0, $maxY - 1);
     }
 
-    public function getX()
+    public function getmonsterX()
     {
         return $this->x;
     }
 
-    public function getY()
+    public function getmonsterY()
     {
         return $this->y;
     }

@@ -16,7 +16,7 @@ class GameMap
         $this->monsters = [
             new Monster($width, $height),
             new Monster($width, $height),
-            new Monster($width, $height)
+            new Monster($width, $height),
         ];
     }
 
