@@ -80,6 +80,28 @@
                 playerCell.style.gridRow = playerY;
                 playerCell.style.gridColumn = playerX;
             }
+            document.addEventListener('keydown', (event) => {
+                switch (event.key) {
+                    // ... Gestion du déplacement du joueur ...
+                }
+
+                updatePlayerPosition();
+            });
+
+            // Déplace les monstres et le trésor en dehors de la boucle
+            updateOtherElements();
+
+            function updateOtherElements() {
+                const treasureCell = document.querySelector('.treasure');
+                treasureCell.style.gridRow = <?php echo $treasure->gettreasureY(); ?>;
+                treasureCell.style.gridColumn = <?php echo $treasure->gettreasureX(); ?>;
+
+                const monsterCells = document.querySelectorAll('.monster');
+                <?php foreach ($monsters as $index => $monster) { ?>
+                    monsterCells[<?php echo $index; ?>].style.gridRow = <?php echo $monster->getmonsterY(); ?>;
+                    monsterCells[<?php echo $index; ?>].style.gridColumn = <?php echo $monster->getmonsterX(); ?>;
+                <?php } ?>
+            }
         </script>
     </div>
 </body>

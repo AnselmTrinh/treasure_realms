@@ -11,12 +11,17 @@ class GameMap
     {
         $this->width = $width;
         $this->height = $height;
-        $this->player = new Player(2, 3);
+        $this->player = new Player(1, 1);
         $this->treasure = new Treasure($width, $height);
         $this->monsters = [
             new Monster($width, $height),
             new Monster($width, $height),
             new Monster($width, $height),
+            new Monster($width, $height),
+            new Monster($width, $height),
+            new Monster($width, $height),
+            new Monster($width, $height),
+            new Monster($width, $height)
         ];
     }
 
