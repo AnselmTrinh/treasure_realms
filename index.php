@@ -52,8 +52,10 @@
         }
         ?>
         <script>
+        
             let playerX = <?php echo $playerX; ?>;
             let playerY = <?php echo $playerY; ?>;
+       
             const step = 1;
 
             document.addEventListener('keydown', (event) => {
@@ -79,14 +81,9 @@
                 const playerCell = document.querySelector('.player');
                 playerCell.style.gridRow = playerY;
                 playerCell.style.gridColumn = playerX;
+                console.log(playerX+'-'+playerY);
             }
-            document.addEventListener('keydown', (event) => {
-                switch (event.key) {
-                    // ... Gestion du déplacement du joueur ...
-                }
-
-                updatePlayerPosition();
-            });
+     
 
             // Déplace les monstres et le trésor en dehors de la boucle
             updateOtherElements();
