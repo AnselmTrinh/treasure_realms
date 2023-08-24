@@ -7,9 +7,6 @@
 </head>
 
 <body>
-    <div class="image">
-        <img src="img\keyboard-arrows-23110.jpg" alt="Votre image">
-    </div>
     <div class="game-map">
         <?php
         include '../poo_treasure/monster.php';
