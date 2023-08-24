@@ -25,3 +25,7 @@
 .monster {
   background-color: red;
 }
+.image-container {
+  position: absolute;
+  margin-top: 525px;
+}

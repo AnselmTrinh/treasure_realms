@@ -51,6 +51,9 @@
             }
         }
         ?>
+        <div class="image-container">
+            <img src="img/keyboard-arrows-23110.jpg" alt="Votre image">
+        </div>
         <script>
             let playerX = <?php echo $playerX; ?>;
             let playerY = <?php echo $playerY; ?>;
