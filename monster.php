@@ -1,8 +1,8 @@
 <?php
 class Monster
 {
-    private $x;
-    private $y;
+    private $x=1;
+    private $y=1;
 
     public function __construct($maxX, $maxY)
     {

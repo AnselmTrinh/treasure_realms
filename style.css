@@ -1,28 +1,26 @@
-.game-map {
-  display: grid;
-  grid-template-columns: repeat(10, 50px);
-  grid-template-rows: repeat(10, 50px);
-  gap: 2px;
-  border: 2px solid black;
-  width: 520px;
-  height: 520px;
-  margin: 20px auto;
-}
 
-.map-cell {
-  width: 50px;
-  height: 50px;
-  border: 1px solid lightgray;
-}
+    .game-map {
+        display: grid;
+        grid-template-columns: repeat(10, 30px); /* Ajustez la taille des cellules selon vos besoins */
+        grid-template-rows: repeat(10, 30px); /* Ajustez la taille des cellules selon vos besoins */
+        gap: 2px; /* Ajustez l'espacement entre les cellules selon vos besoins */
+    }
 
-.player {
-  background-color: blue;
-}
+    .map-cell {
+        width: 30px; /* Ajustez la taille des cellules selon vos besoins */
+        height: 30px; /* Ajustez la taille des cellules selon vos besoins */
+        border: 1px solid #000;
+        background-color: #eee;
+    }
 
-.treasure {
-  background-color: gold;
-}
+    .player {
+        background-color: blue; /* Couleur pour le joueur */
+    }
 
-.monster {
-  background-color: red;
-}
+    .treasure {
+        background-color: yellow; /* Couleur pour le trésor */
+    }
+
+    .monster {
+        background-color: red; /* Couleur pour le monstre */
+    }
