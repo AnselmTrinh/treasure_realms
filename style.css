@@ -6,7 +6,6 @@
   border: 2px solid black;
   width: 520px;
   height: 520px;
-  margin: 20px auto;
 }
 
 .map-cell {
@@ -25,4 +24,7 @@
 
 .monster {
   background-color: red;
+}
+.image {
+  padding-top: 50%;
 }
