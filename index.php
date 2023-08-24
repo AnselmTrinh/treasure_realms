@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Treasure Realms</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-
 <body>
     <div class="game-map">
         <?php
@@ -20,6 +18,15 @@
         $playerY = $player->getY();
         $treasure = $gameMap->getTreasure();
         $monsters = $gameMap->getMonsters();
+
+        // Gestion des combats
+        foreach ($monsters as $monster) {
+            if ($player->getX() === $monster->getmonsterX() && $player->getY() === $monster->getmonsterY()) {
+                // Le joueur a rencontré un monstre
+                echo '<p>Le joueur a rencontré un monstre!</p>';
+                $player->fight($player,$monster);
+            }
+        }
 
         for ($y = 1; $y <= 10; $y++) {
             for ($x = 1; $x <= 10; $x++) {
@@ -57,7 +64,6 @@
         <script>
             let playerX = <?php echo $playerX; ?>;
             let playerY = <?php echo $playerY; ?>;
-
             const step = 1;
 
             document.addEventListener('keydown', (event) => {
@@ -83,9 +89,8 @@
                 const playerCell = document.querySelector('.player');
                 playerCell.style.gridRow = playerY;
                 playerCell.style.gridColumn = playerX;
-                console.log(playerX + '-' + playerY);
+                console.log("joueur: " + playerX + '-' + playerY);
             }
-
 
             // Déplace les monstres et le trésor en dehors de la boucle
             updateOtherElements();
@@ -104,5 +109,4 @@
         </script>
     </div>
 </body>
-
 </html>
